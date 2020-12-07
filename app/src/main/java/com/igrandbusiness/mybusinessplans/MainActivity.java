@@ -2,6 +2,7 @@ package com.igrandbusiness.mybusinessplans;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -11,11 +12,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigation;
+    BottomSheetBehavior bottomSheetBehavior;
+    ConstraintLayout bottom;
     TextView greeting;
     String phone;
     @Override
@@ -23,8 +27,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         greeting = findViewById(R.id.greeting);
+        bottom = findViewById(R.id.bottom);
         phone = "+254795801971";
         bottomNavigation = findViewById(R.id.bottom_navigation);
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomNavigation);
         BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -35,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 return true;
                             case R.id.navigation_media:
+                                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                                 return true;
                         }
                         return false;
