@@ -2,12 +2,15 @@ package com.igrandbusiness.mybusinessplans;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,12 +25,23 @@ public class MainActivity extends AppCompatActivity {
     ConstraintLayout bottom;
     TextView greeting;
     String phone;
+    ImageView faceb,twitter,telegram,mail,linkedin;
+    LinearLayoutCompat videos,magazine,podcasts,businessPlans;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         greeting = findViewById(R.id.greeting);
         bottom = findViewById(R.id.bottom);
+        faceb = findViewById(R.id.fb);
+        videos = findViewById(R.id.videos);
+        magazine = findViewById(R.id.magazine);
+        podcasts = findViewById(R.id.podcasts);
+        businessPlans = findViewById(R.id.business_plans);
+        twitter = findViewById(R.id.twitter);
+        telegram = findViewById(R.id.telegram);
+        mail = findViewById(R.id.mail);
+        linkedin = findViewById(R.id.linkedin);
         phone = "+254795801971";
         bottomNavigation = findViewById(R.id.bottom_navigation);
         bottomSheetBehavior = BottomSheetBehavior.from(bottomNavigation);
@@ -48,6 +62,60 @@ public class MainActivity extends AppCompatActivity {
                     }
                 };
         greetUser();
+        videos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        magazine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        podcasts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        businessPlans.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        faceb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        });
+        twitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        });
+        mail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        });
+        telegram.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        });
+        linkedin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        });
     }
 
     private void greetUser() {

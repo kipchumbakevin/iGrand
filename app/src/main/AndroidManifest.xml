@@ -11,7 +11,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".VideosList"></activity>
+        <activity android:name=".ChangePhone"></activity>
+        <activity android:name=".ChangePassword" />
+        <activity android:name=".ForgotPassword" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".VideosList" />
         <activity android:name=".AudioPlayer" />
         <activity android:name=".VideoPlayer" />
         <activity android:name=".ViewPDF" />
