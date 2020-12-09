@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">My Business Plans</string>
     <string name="mission">To provide Micro, Small and Medium sized entrepreneurs with insights to plan ahead through professional business plans.</string>
+
+    <string name="SHARED_PREFERENCES">com.example.lovidovi.utils.sharedpref</string>
+    <string name="CLIENTS_PHONE">com.example.lovidovi.utils.sharedpref.phone</string>
+    <string name="CLIENTS_TOKEN">com.example.lovidovi.utils.sharedpref.accessToken</string>
+    <string name="CLIENTS_STATUS">com.example.lovidovi.utils.sharedpref.status</string>
 </resources>

@@ -11,7 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ChangePhone"></activity>
+        <activity android:name=".settings.SettingsActivity"></activity>
+        <activity android:name=".CodeVerification" />
+        <activity android:name=".ChangePhone" />
         <activity android:name=".ChangePassword" />
         <activity android:name=".ForgotPassword" />
         <activity android:name=".LoginActivity" />
