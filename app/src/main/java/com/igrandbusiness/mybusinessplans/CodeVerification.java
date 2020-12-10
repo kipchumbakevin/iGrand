@@ -130,7 +130,7 @@ public class CodeVerification extends AppCompatActivity implements
                     //  clientsId = Integer.toString(response.body().getUser().getId());
                     sharedPreferencesConfig.saveAuthenticationInformation(token,clientsPhone, Constants.ACTIVE_CONSTANT);
                     Toast.makeText(CodeVerification.this, "Successfully registered", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(CodeVerification.this, MainActivity.class);
+                    Intent intent = new Intent(CodeVerification.this, ProfileActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -264,12 +264,12 @@ public class CodeVerification extends AppCompatActivity implements
                     //  clientsId = Integer.toString(response.body().getUser().getId());
                     sharedPreferencesConfig.saveAuthenticationInformation(token,clientsPhone, Constants.ACTIVE_CONSTANT);
                     Toast.makeText(CodeVerification.this, "Successfully changed", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(CodeVerification.this, MainActivity.class);
+                    Intent intent = new Intent(CodeVerification.this, ProfileActivity.class);
                     startActivity(intent);
                     finish();
                 }
                 else{
-                    Toast.makeText(CodeVerification.this,response.message(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CodeVerification.this,response.body().getMessage(),Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -293,7 +293,7 @@ public class CodeVerification extends AppCompatActivity implements
                 hideProgress();
                 if(response.code()==201){
                     Toast.makeText(CodeVerification.this, "Successfully changed", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(CodeVerification.this, MainActivity.class);
+                    Intent intent = new Intent(CodeVerification.this, ProfileActivity.class);
                     startActivity(intent);
                     finish();
                 }

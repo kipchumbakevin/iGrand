@@ -11,18 +11,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".settings.SettingsActivity"></activity>
-        <activity android:name=".CodeVerification" />
-        <activity android:name=".ChangePhone" />
-        <activity android:name=".ChangePassword" />
-        <activity android:name=".ForgotPassword" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".SignUpActivity" />
+        <activity android:name=".ProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".settings.SettingsActivity" />
+        <activity android:name=".CodeVerification"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ChangePhone"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ChangePassword"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ForgotPassword"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".SignUpActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".VideosList" />
         <activity android:name=".AudioPlayer" />
         <activity android:name=".VideoPlayer" />
         <activity android:name=".ViewPDF" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

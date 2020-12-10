@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:id="@+id/bottom"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     app:layout_behavior="@string/bottom_sheet_behavior"
     app:behavior_hideable="true"
     android:padding="20dp"
@@ -14,40 +14,35 @@
         android:id="@+id/fb"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/fb"/>
     <ImageView
         android:id="@+id/twitter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fb"
-        android:layout_width="60dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_height="60dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/twitter"/>
     <ImageView
         android:id="@+id/linkedin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/twitter"
-        android:layout_width="60dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_height="60dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/link"/>
     <ImageView
         android:id="@+id/telegram"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/linkedin"
-        android:layout_width="60dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_height="60dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/tele"/>
     <ImageView
         android:id="@+id/mail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/telegram"
-        android:layout_width="60dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_height="60dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/mail"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

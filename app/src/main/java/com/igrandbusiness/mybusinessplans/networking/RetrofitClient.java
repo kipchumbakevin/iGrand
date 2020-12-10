@@ -3,6 +3,7 @@ package com.igrandbusiness.mybusinessplans.networking;
 import android.content.Context;
 
 import com.igrandbusiness.mybusinessplans.utils.Constants;
+import com.igrandbusiness.mybusinessplans.utils.SharedPreferencesConfig;
 
 import java.io.IOException;
 
@@ -18,14 +19,21 @@ public class RetrofitClient {
     private static final String BaseUrl = Constants.BASE_URL;
     private Retrofit retrofit;
     private RetrofitClient(Context context) {
+        final String accessToken;
+        if(new SharedPreferencesConfig(context).isloggedIn()){
+            accessToken=new SharedPreferencesConfig(context).readClientsAccessToken();
 
+        }else{
+            accessToken="";
+        }
         OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder()
                 .retryOnConnectionFailure(true)
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
                         Request request = chain.request();
-                        Request.Builder new_request = request.newBuilder();
+                        Request.Builder new_request = request.newBuilder()
+                                .addHeader("Authorization","Bearer "+accessToken);
                         return chain.proceed(new_request.build());
                     }
                 });

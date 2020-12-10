@@ -34,6 +34,8 @@ public class ChangePhone extends AppCompatActivity {
         newPhone = findViewById(R.id.new_phone);
         change = findViewById(R.id.change);
 
+        ccp2.registerCarrierNumberEditText(newPhone);
+        ccp.registerCarrierNumberEditText(old);
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,23 +46,23 @@ public class ChangePhone extends AppCompatActivity {
 
     private void checkPhone() {
         showProgress();
-        final String oldpho = old.getText().toString();
-        final String newpho = newPhone.getText().toString();
+        final String oldpho = ccp.getFullNumberWithPlus();
+        final String newpho = ccp2.getFullNumberWithPlus();
             Call<MessagesModel> call = RetrofitClient.getInstance(ChangePhone.this)
                     .getApiConnector()
-                    .checkpho(oldpho);
+                    .checkpho(oldpho,newpho);
             call.enqueue(new Callback<MessagesModel>() {
                 @Override
                 public void onResponse(Call<MessagesModel> call, Response<MessagesModel> response) {
                     hideProgress();
                     if (response.code() == 201) {
                         Intent intent = new Intent(ChangePhone.this, CodeVerification.class);
-                        intent.putExtra("CODES", Integer.toString(2));
+                        intent.putExtra("CODES", Integer.toString(3));
                         intent.putExtra("NEWPHONE", newpho);
                         startActivity(intent);
                         finish();
                     } else {
-                        Toast.makeText(ChangePhone.this, response.message(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(ChangePhone.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                     }
 
                 }

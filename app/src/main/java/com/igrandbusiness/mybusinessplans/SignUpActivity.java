@@ -22,8 +22,8 @@ import retrofit2.Response;
 public class SignUpActivity extends AppCompatActivity {
     CountryCodePicker ccp;
     EditText email,phone,password,confirm;
-    Button singnup,login;
-    TextView terms;
+    Button singnup;
+    TextView terms,login;
     ProgressBar progress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,21 +39,37 @@ public class SignUpActivity extends AppCompatActivity {
         login = findViewById(R.id.go_to_login);
         terms = findViewById(R.id.terms_of_service);
 
+        ccp.registerCarrierNumberEditText(phone);
         singnup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 checkDetails();
             }
         });
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SignUpActivity.this,LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
     private void checkDetails() {
-        showProgress();
-        final String pho,mail,pass,cpass;
-        pho = ccp.getDefaultCountryCodeWithPlus();
-        mail = email.getText().toString();
-        pass = password.getText().toString();
-        cpass = confirm.getText().toString();
-        if (pass.equals(cpass)) {
+        if (!ccp.isValidFullNumber()){
+            Toast.makeText(this, "Enter a valid number", Toast.LENGTH_SHORT).show();
+        }if (email.getText().toString().isEmpty() || password.getText().toString().isEmpty() || confirm.getText().toString().isEmpty()){
+            Toast.makeText(this, "Ensure you fill all fields", Toast.LENGTH_SHORT).show();
+        }if (!password.getText().toString().equals(confirm.getText().toString())){
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            final String pho, mail, pass, cpass;
+            pho = ccp.getFullNumberWithPlus();
+            mail = email.getText().toString();
+            pass = password.getText().toString();
+            cpass = confirm.getText().toString();
+            showProgress();
             Call<MessagesModel> call = RetrofitClient.getInstance(SignUpActivity.this)
                     .getApiConnector()
                     .checkDetails(pho, mail);
@@ -71,7 +87,7 @@ public class SignUpActivity extends AppCompatActivity {
                         intent.putExtra("CONFIRM", cpass);
                         startActivity(intent);
                     } else {
-                        Toast.makeText(SignUpActivity.this, response.message(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(SignUpActivity.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
                     }
 
                 }
@@ -82,8 +98,6 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(SignUpActivity.this, "Network error. Check your connection", Toast.LENGTH_LONG).show();
                 }
             });
-        }else {
-            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
         }
     }
 

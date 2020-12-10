@@ -47,6 +47,14 @@ public interface JsonPlaceHolderInterface {
             @Field("code")String code
 
     );
+    //change password
+    @FormUrlEncoded
+    @POST("api/changepass")
+    Call<MessagesModel> changePass(
+            @Field("oldpass")String oldp,
+            @Field("newpass")String newp
+
+    );
     //login user
     @FormUrlEncoded
     @POST("api/auth/login")
@@ -66,7 +74,8 @@ public interface JsonPlaceHolderInterface {
     @FormUrlEncoded
     @POST("api/checkphone")
     Call<MessagesModel> checkpho(
-            @Field("phone")String oldpho
+            @Field("phone")String oldpho,
+            @Field("newPhone")String newpho
     );
     //change phone number
     @FormUrlEncoded

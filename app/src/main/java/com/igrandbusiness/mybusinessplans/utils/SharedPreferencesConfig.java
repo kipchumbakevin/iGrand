@@ -13,7 +13,7 @@ public class SharedPreferencesConfig {
         sharedPreferences = context.getSharedPreferences(context.getResources().getString(R.string.SHARED_PREFERENCES), Context.MODE_PRIVATE);
     }
 
-    public void saveAuthenticationInformation(String accessToken,String status, String phone){
+    public void saveAuthenticationInformation(String accessToken, String phone,String status){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(context.getResources().getString(R.string.CLIENTS_TOKEN),accessToken);
         editor.putString(context.getResources().getString(R.string.CLIENTS_STATUS),status);
@@ -38,6 +38,9 @@ public class SharedPreferencesConfig {
         return  phone;
     }
 
+    public  boolean isloggedIn(){
+        return readClientsStatus().equals(Constants.ACTIVE_CONSTANT);
+    }
 
     public void clear() {
         SharedPreferences.Editor editor=sharedPreferences.edit();

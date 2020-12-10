@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,8 +24,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
-    Button login,gotToSignUp;
-    TextView forgot;
+    Button login;
+    TextView forgot,gotToSignUp;
     EditText phone,password;
     CountryCodePicker ccp;
     ProgressBar progress;
@@ -42,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         ccp = findViewById(R.id.ccp);
         progress = findViewById(R.id.progress);
         sharedPreferencesConfig = new SharedPreferencesConfig(this);
+        ccp.registerCarrierNumberEditText(phone);
 
         forgot.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,32 +59,55 @@ public class LoginActivity extends AppCompatActivity {
                 loginUser();
             }
         });
+        gotToSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this,SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("logged", ""+ sharedPreferencesConfig.isloggedIn());
+
+        if (sharedPreferencesConfig.isloggedIn()){
+            // Toast.makeText(LoginActivity.this,sharedPreferencesConfig.readClientsId(),Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void loginUser() {
+        if (!ccp.isValidFullNumber()){
+            Toast.makeText(this, "Enter a valid number", Toast.LENGTH_SHORT).show();
+        }if (password.getText().toString().isEmpty()){
+            Toast.makeText(this, "Ensure you fill all fields", Toast.LENGTH_SHORT).show();
+        }else {
             showProgress();
-            String pho = phone.getText().toString();
+            String pho = ccp.getFullNumberWithPlus();
             String pass = password.getText().toString();
             Call<UsersModel> call = RetrofitClient.getInstance(LoginActivity.this)
                     .getApiConnector()
-                    .login(pho,pass);
+                    .login(pho, pass);
             call.enqueue(new Callback<UsersModel>() {
                 @Override
                 public void onResponse(Call<UsersModel> call, Response<UsersModel> response) {
                     hideProgress();
-                    if(response.isSuccessful()){
+                    if (response.isSuccessful()) {
                         //  String mmm =  Integer.toString(response.body().getUser().getId());
                         accessToken = response.body().getAccessToken();
                         clientsPhone = response.body().getUser().getPhone();
                         //   clientsId = Integer.toString(response.body().getUser().getId());
-                        sharedPreferencesConfig.saveAuthenticationInformation(accessToken,clientsPhone, Constants.ACTIVE_CONSTANT);
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        sharedPreferencesConfig.saveAuthenticationInformation(accessToken, clientsPhone, Constants.ACTIVE_CONSTANT);
+                        Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
                         startActivity(intent);
                         finish();
-
-                    }
-                    else{
-                        Toast.makeText(LoginActivity.this,"Server error. Check your details",Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(LoginActivity.this, response.message(), Toast.LENGTH_LONG).show();
                     }
 
                 }
@@ -90,9 +115,10 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<UsersModel> call, Throwable t) {
                     hideProgress();
-                    Toast.makeText(LoginActivity.this,"Network error. Check your connection",Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "Network error. Check your connection", Toast.LENGTH_LONG).show();
                 }
             });
+        }
 
     }
     private void showProgress(){

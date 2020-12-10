@@ -35,6 +35,7 @@ public class ForgotPassword extends AppCompatActivity {
         confirm_password = findViewById(R.id.confirm_password);
         progress = findViewById(R.id.progress);
 
+        ccp.registerCarrierNumberEditText(phone);
         goLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,38 +53,44 @@ public class ForgotPassword extends AppCompatActivity {
     }
 
     private void changePass() {
-        showProgress();
-        final String pho = phone.getText().toString();
-        final String pass = password.getText().toString();
-        if (pass.equals(confirm_password.getText().toString())) {
-            Call<MessagesModel> call = RetrofitClient.getInstance(ForgotPassword.this)
-                    .getApiConnector()
-                    .check(pho);
-            call.enqueue(new Callback<MessagesModel>() {
-                @Override
-                public void onResponse(Call<MessagesModel> call, Response<MessagesModel> response) {
-                    hideProgress();
-                    if (response.code() == 201) {
-                        Intent intent = new Intent(ForgotPassword.this, CodeVerification.class);
-                        intent.putExtra("CODES", Integer.toString(2));
-                        intent.putExtra("PHONE", pho);
-                        intent.putExtra("NEWPASS", pass);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        Toast.makeText(ForgotPassword.this, response.message(), Toast.LENGTH_LONG).show();
+        if (!ccp.isValidFullNumber()){
+            Toast.makeText(this, "Enter a valid number", Toast.LENGTH_SHORT).show();
+        }if (password.getText().toString().isEmpty() || confirm_password.getText().toString().isEmpty()){
+            Toast.makeText(this, "Ensure you fill all fields", Toast.LENGTH_SHORT).show();
+        }else {
+            showProgress();
+            final String pho = ccp.getFullNumberWithPlus();
+            final String pass = password.getText().toString();
+            if (pass.equals(confirm_password.getText().toString())) {
+                Call<MessagesModel> call = RetrofitClient.getInstance(ForgotPassword.this)
+                        .getApiConnector()
+                        .check(pho);
+                call.enqueue(new Callback<MessagesModel>() {
+                    @Override
+                    public void onResponse(Call<MessagesModel> call, Response<MessagesModel> response) {
+                        hideProgress();
+                        if (response.code() == 201) {
+                            Intent intent = new Intent(ForgotPassword.this, CodeVerification.class);
+                            intent.putExtra("CODES", Integer.toString(2));
+                            intent.putExtra("PHONE", pho);
+                            intent.putExtra("NEWPASS", pass);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Toast.makeText(ForgotPassword.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        }
+
                     }
 
-                }
-
-                @Override
-                public void onFailure(Call<MessagesModel> call, Throwable t) {
-                    hideProgress();
-                    Toast.makeText(ForgotPassword.this, "Network error. Check your connection", Toast.LENGTH_LONG).show();
-                }
-            });
-        }else {
-            Toast.makeText(ForgotPassword.this, "Passwords do not match", Toast.LENGTH_LONG).show();
+                    @Override
+                    public void onFailure(Call<MessagesModel> call, Throwable t) {
+                        hideProgress();
+                        Toast.makeText(ForgotPassword.this, "Network error. Check your connection", Toast.LENGTH_LONG).show();
+                    }
+                });
+            } else {
+                Toast.makeText(ForgotPassword.this, "Passwords do not match", Toast.LENGTH_LONG).show();
+            }
         }
 
     }
