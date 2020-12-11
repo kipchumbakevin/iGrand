@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.igrandbusiness.mybusinessplans">
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -27,9 +28,10 @@
         <activity android:name=".SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".VideosList" />
-        <activity android:name=".AudioPlayer" />
+        <activity android:name=".AudioPlayer"/>
         <activity android:name=".VideoPlayer" />
-        <activity android:name=".ViewPDF" />
+        <activity android:name=".ViewPDF"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -39,6 +41,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service
+            android:enabled="true"
+            android:name="com.igrandbusiness.mybusinessplans.BackgroundSoundService" />
     </application>
 
 </manifest>

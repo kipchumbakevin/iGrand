@@ -74,7 +74,42 @@
             android:paddingTop="5dp"
             android:paddingEnd="20dp"
             android:paddingBottom="5dp">
-
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/videos"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/magazine"
+                app:cardCornerRadius="8dp"
+                android:id="@+id/call_us"
+                android:padding="5dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:drawablePadding="5dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:drawableStart="@drawable/ic_local_phone"
+                    android:text="Call/Text"/>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/podcasts"
+                app:layout_constraintTop_toBottomOf="@id/call_us"
+                app:layout_constraintEnd_toStartOf="@id/magazine"
+                app:cardCornerRadius="8dp"
+                android:id="@+id/find_us"
+                android:padding="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:drawablePadding="5dp"
+                    android:drawableStart="@drawable/ic_search"
+                    android:text="Find us"/>
+            </androidx.cardview.widget.CardView>
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/videos"
                 android:layout_width="wrap_content"
@@ -305,46 +340,6 @@
                 android:text="Business Reviews and Plans\nAnalysis\nCapital Raising"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.cardview.widget.CardView>
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_marginTop="20dp"
-                android:paddingBottom="10dp"
-                android:layout_height="wrap_content">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/values"
-                app:cardCornerRadius="8dp"
-                android:id="@+id/call_us"
-                android:padding="5dp"
-                android:layout_height="wrap_content">
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:drawablePadding="5dp"
-                   android:layout_height="wrap_content"
-                   android:drawableStart="@drawable/ic_local_phone"
-                   android:text="Call/Text"/>
-            </androidx.cardview.widget.CardView>
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/values"
-                    app:cardCornerRadius="8dp"
-                    android:id="@+id/find_us"
-                    android:layout_marginStart="30dp"
-                    android:padding="10dp"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="5dp"
-                        android:drawableStart="@drawable/ic_search"
-                        android:text="Find us"/>
-                </androidx.cardview.widget.CardView>
-            </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

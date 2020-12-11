@@ -9,8 +9,8 @@
     android:background="@color/colorPrimary"
     tools:context=".AudioPlayer">
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:src="@drawable/ic_music"/>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -44,24 +44,24 @@
         android:orientation="horizontal"
         android:layout_marginTop="8dp">
         <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:id="@+id/bt_rew"
             android:src="@drawable/ic_rew"/>
         <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:id="@+id/bt_play"
             android:src="@drawable/ic_play"/>
         <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:id="@+id/bt_pause"
             android:visibility="gone"
             android:src="@drawable/ic_pause"/>
         <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:id="@+id/bt_ff"
             android:src="@drawable/ic_ff"/>
     </androidx.appcompat.widget.LinearLayoutCompat>

@@ -3,6 +3,7 @@ package com.igrandbusiness.mybusinessplans;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -122,6 +123,15 @@ public class AudioPlayer extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mediaPlayer.isPlaying()){
+            mediaPlayer.pause();
+            handler.removeCallbacks(runnable);
+        }
+        super.onBackPressed();
     }
 
     @SuppressLint("DefaultLocale")
