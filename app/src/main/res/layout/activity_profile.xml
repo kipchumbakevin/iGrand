@@ -11,7 +11,7 @@
         android:id="@+id/ic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="60dp"
+        android:layout_width="50dp"
         android:layout_height="60dp"
         android:src="@drawable/icon"/>
     <ImageView

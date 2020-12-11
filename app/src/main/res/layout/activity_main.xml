@@ -78,7 +78,6 @@
                 android:layout_width="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/videos"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/magazine"
                 app:cardCornerRadius="8dp"
                 android:id="@+id/call_us"
@@ -94,7 +93,7 @@
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/podcasts"
+                app:layout_constraintStart_toEndOf="@id/videos"
                 app:layout_constraintTop_toBottomOf="@id/call_us"
                 app:layout_constraintEnd_toStartOf="@id/magazine"
                 app:cardCornerRadius="8dp"

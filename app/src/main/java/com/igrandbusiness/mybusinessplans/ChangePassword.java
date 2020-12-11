@@ -40,34 +40,38 @@ public class ChangePassword extends AppCompatActivity {
         });
     }
     private void changePass() {
-        showProgress();
-        String oldp,newp;
-        oldp = old.getText().toString();
-        newp = newP.getText().toString();
-        Call<MessagesModel> call = RetrofitClient.getInstance(ChangePassword.this)
-                .getApiConnector()
-                .changePass(oldp,newp);
-        call.enqueue(new Callback<MessagesModel>() {
-            @Override
-            public void onResponse(Call<MessagesModel> call, Response<MessagesModel> response) {
-                hideProgress();
-                if (response.code() == 201) {
-                    Toast.makeText(ChangePassword.this, "Password changed", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(ChangePassword.this, SettingsActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    Toast.makeText(ChangePassword.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+        if (old.getText().toString().isEmpty() || newP.getText().toString().isEmpty() || confirm.getText().toString().isEmpty()){
+            Toast.makeText(this, "Ensure you fill all fields", Toast.LENGTH_SHORT).show();
+        }else {
+            showProgress();
+            String oldp, newp;
+            oldp = old.getText().toString();
+            newp = newP.getText().toString();
+            Call<MessagesModel> call = RetrofitClient.getInstance(ChangePassword.this)
+                    .getApiConnector()
+                    .changePass(oldp, newp);
+            call.enqueue(new Callback<MessagesModel>() {
+                @Override
+                public void onResponse(Call<MessagesModel> call, Response<MessagesModel> response) {
+                    hideProgress();
+                    if (response.code() == 201) {
+                        Toast.makeText(ChangePassword.this, "Password changed", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(ChangePassword.this, SettingsActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(ChangePassword.this, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                    }
+
                 }
 
-            }
-
-            @Override
-            public void onFailure(Call<MessagesModel> call, Throwable t) {
-                hideProgress();
-                Toast.makeText(ChangePassword.this, "Network error. Check your connection", Toast.LENGTH_LONG).show();
-            }
-        });
+                @Override
+                public void onFailure(Call<MessagesModel> call, Throwable t) {
+                    hideProgress();
+                    Toast.makeText(ChangePassword.this, "Network error. Check your connection", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
     private void showProgress(){
         progress.setVisibility(View.VISIBLE);

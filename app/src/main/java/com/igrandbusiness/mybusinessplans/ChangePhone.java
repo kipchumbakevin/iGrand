@@ -45,12 +45,15 @@ public class ChangePhone extends AppCompatActivity {
     }
 
     private void checkPhone() {
-        showProgress();
-        final String oldpho = ccp.getFullNumberWithPlus();
-        final String newpho = ccp2.getFullNumberWithPlus();
+        if (!ccp.isValidFullNumber() || !ccp2.isValidFullNumber()){
+            Toast.makeText(this, "Enter a valid number", Toast.LENGTH_SHORT).show();
+        }else {
+            showProgress();
+            final String oldpho = ccp.getFullNumberWithPlus();
+            final String newpho = ccp2.getFullNumberWithPlus();
             Call<MessagesModel> call = RetrofitClient.getInstance(ChangePhone.this)
                     .getApiConnector()
-                    .checkpho(oldpho,newpho);
+                    .checkpho(oldpho, newpho);
             call.enqueue(new Callback<MessagesModel>() {
                 @Override
                 public void onResponse(Call<MessagesModel> call, Response<MessagesModel> response) {
@@ -73,6 +76,7 @@ public class ChangePhone extends AppCompatActivity {
                     Toast.makeText(ChangePhone.this, "Network error. Check your connection", Toast.LENGTH_LONG).show();
                 }
             });
+        }
     }
     private void showProgress(){
         progress.setVisibility(View.VISIBLE);
