@@ -60,14 +60,14 @@ public class MainActivity extends AppCompatActivity {
         magazine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ViewPDF.class);
+                Intent intent = new Intent(getApplicationContext(), Magazines.class);
                 startActivity(intent);
             }
         });
         podcasts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),AudioPlayer.class);
+                Intent intent = new Intent(getApplicationContext(),Podcasts.class);
                 startActivity(intent);
             }
         });
