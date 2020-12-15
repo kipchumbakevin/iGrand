@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ViewPDF">
 
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="30dp"
+        android:layout_gravity="center"
+        android:layout_height="30dp"
+        android:visibility="gone"
+        android:background="@drawable/progress"
+        android:padding="5dp" />
+    <androidx.appcompat.widget.AppCompatSeekBar
+        android:id="@+id/seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <com.github.barteksc.pdfviewer.PDFView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#9E9E9E"
         android:id="@+id/pdfviewer"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

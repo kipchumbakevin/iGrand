@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.igrandbusiness.mybusinessplans.adapters.ContentAdapter;
+import com.igrandbusiness.mybusinessplans.adapters.VideosAdapter;
 import com.igrandbusiness.mybusinessplans.models.ReceiveData;
 import com.igrandbusiness.mybusinessplans.networking.RetrofitClient;
 import com.khizar1556.mkvideoplayer.MKPlayer;
@@ -30,7 +31,7 @@ import retrofit2.Response;
 
 public class VideoPlayer extends AppCompatActivity {
 
-    ContentAdapter contentAdapter;
+    VideosAdapter videosAdapter;
     TextView novideos;
     RecyclerView recyclerView;
     private ArrayList<ReceiveData>mContentArrayList = new ArrayList<>();
@@ -42,8 +43,8 @@ public class VideoPlayer extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler);
         progressLyt = findViewById(R.id.progress);
         novideos = findViewById(R.id.novideos);
-        contentAdapter = new ContentAdapter(this,mContentArrayList);
-        recyclerView.setAdapter(contentAdapter);
+        videosAdapter = new VideosAdapter(this,mContentArrayList);
+        recyclerView.setAdapter(videosAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         fetchVideos();
@@ -76,7 +77,7 @@ public class VideoPlayer extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body().size()>0){
                         mContentArrayList.addAll(response.body());
-                        contentAdapter.notifyDataSetChanged();
+                        videosAdapter.notifyDataSetChanged();
                     }else {
                         novideos.setVisibility(View.VISIBLE);
                     }

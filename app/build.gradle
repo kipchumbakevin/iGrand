@@ -32,6 +32,7 @@ dependencies {
     //video picker
     implementation 'net.alhazmy13.MediaPicker:libary:2.4.4'
     implementation 'com.google.android.material:material:1.1.0-alpha10'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'androidx.preference:preference:1.1.0-rc01'
@@ -45,4 +46,5 @@ dependencies {
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
     //pdf
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+    implementation 'com.github.kk121:File-Loader:1.2'
 }

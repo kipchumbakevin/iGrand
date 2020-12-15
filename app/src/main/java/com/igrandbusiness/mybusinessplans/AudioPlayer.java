@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -21,6 +22,8 @@ public class AudioPlayer extends AppCompatActivity {
     MediaPlayer mediaPlayer;
     Handler handler = new Handler();
     Runnable runnable;
+    Uri uri;
+    String aud;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +35,10 @@ public class AudioPlayer extends AppCompatActivity {
         btPause = findViewById(R.id.bt_pause);
         btPlay = findViewById(R.id.bt_play);
         seekBar = findViewById(R.id.seek_bar);
+        uri = Uri.parse(getIntent().getExtras().getString("URI"));
 
-        mediaPlayer = MediaPlayer.create(this,R.raw.song);
+        setTitle(getIntent().getExtras().getString("TITLE"));
+        mediaPlayer = MediaPlayer.create(this,uri);
         runnable = new Runnable() {
             @Override
             public void run() {
@@ -44,6 +49,11 @@ public class AudioPlayer extends AppCompatActivity {
         int duration = mediaPlayer.getDuration();
         String sDuration = convertFormat(duration);
         playerDuration.setText(sDuration);
+        btPlay.setVisibility(View.GONE);
+        btPause.setVisibility(View.VISIBLE);
+        mediaPlayer.start();
+        seekBar.setMax(mediaPlayer.getDuration());
+        handler.postDelayed(runnable,0);
 
         btPlay.setOnClickListener(new View.OnClickListener() {
             @Override

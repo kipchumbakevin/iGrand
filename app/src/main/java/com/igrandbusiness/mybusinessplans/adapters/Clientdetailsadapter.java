@@ -1,6 +1,7 @@
 package com.igrandbusiness.mybusinessplans.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.igrandbusiness.mybusinessplans.R;
+import com.igrandbusiness.mybusinessplans.ViewPDF;
 import com.igrandbusiness.mybusinessplans.models.UserDocs;
+import com.igrandbusiness.mybusinessplans.utils.Constants;
 
 import java.util.ArrayList;
 
@@ -36,6 +39,7 @@ public class Clientdetailsadapter extends RecyclerView.Adapter<Clientdetailsadap
     public void onBindViewHolder(@NonNull ClientViewHolder holder, int position) {
         UserDocs userDocs = mDocsArrayList.get(position);
         holder.title.setText(userDocs.getTitle());
+        holder.uri = Constants.BASE_URL + "clientDocs/" +userDocs.getUrl();
     }
 
     @Override
@@ -45,9 +49,19 @@ public class Clientdetailsadapter extends RecyclerView.Adapter<Clientdetailsadap
 
     public class ClientViewHolder extends RecyclerView.ViewHolder {
         TextView title;
+        String uri;
         public ClientViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mContext, ViewPDF.class);
+                    intent.putExtra("URI",uri);
+                    mContext.startActivity(intent);
+                }
+            });
         }
     }
 }

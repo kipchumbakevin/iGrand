@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.igrandbusiness.mybusinessplans.adapters.ContentAdapter;
+import com.igrandbusiness.mybusinessplans.adapters.MagazineAdapter;
 import com.igrandbusiness.mybusinessplans.models.ReceiveData;
 import com.igrandbusiness.mybusinessplans.networking.RetrofitClient;
 
@@ -23,7 +24,7 @@ import retrofit2.Response;
 
 public class Magazines extends AppCompatActivity {
 
-    ContentAdapter contentAdapter;
+    MagazineAdapter magazineAdapter;
     TextView novideos;
     RecyclerView recyclerView;
     private ArrayList<ReceiveData> mContentArrayList = new ArrayList<>();
@@ -35,8 +36,8 @@ public class Magazines extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler);
         progressLyt = findViewById(R.id.progress);
         novideos = findViewById(R.id.novideos);
-        contentAdapter = new ContentAdapter(this,mContentArrayList);
-        recyclerView.setAdapter(contentAdapter);
+        magazineAdapter = new MagazineAdapter(this,mContentArrayList);
+        recyclerView.setAdapter(magazineAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         fetchMagazines();
@@ -54,7 +55,7 @@ public class Magazines extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body().size()>0){
                         mContentArrayList.addAll(response.body());
-                        contentAdapter.notifyDataSetChanged();
+                        magazineAdapter.notifyDataSetChanged();
                     }else {
                         novideos.setVisibility(View.VISIBLE);
                     }
