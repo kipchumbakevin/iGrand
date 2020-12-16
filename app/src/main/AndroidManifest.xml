@@ -19,7 +19,8 @@
         <activity
             android:name=".ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".settings.SettingsActivity" />
+        <activity android:name=".settings.SettingsActivity"
+            android:label="Settings"/>
         <activity
             android:name=".CodeVerification"
             android:theme="@style/AppTheme.NoActionBar" />
