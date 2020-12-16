@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
                startActivity(intent);
+               finish();
             }
         });
         profile.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,LoginActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
         faceb.setOnClickListener(new View.OnClickListener() {

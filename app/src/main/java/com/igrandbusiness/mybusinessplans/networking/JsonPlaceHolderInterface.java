@@ -102,4 +102,7 @@ public interface JsonPlaceHolderInterface {
     //getpod
     @GET("api/getpod")
     Call<List<ReceiveData>> getPod();
+    //logout
+    @GET("api/auth/logout")
+    Call<MessagesModel> logOut();
 }

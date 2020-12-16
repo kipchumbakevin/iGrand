@@ -76,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         if (sharedPreferencesConfig.isloggedIn()){
             // Toast.makeText(LoginActivity.this,sharedPreferencesConfig.readClientsId(),Toast.LENGTH_LONG).show();
             Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
+            intent.putExtra("COME",Integer.toString(2));
             startActivity(intent);
             finish();
         }
@@ -104,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                         //   clientsId = Integer.toString(response.body().getUser().getId());
                         sharedPreferencesConfig.saveAuthenticationInformation(accessToken, clientsPhone, Constants.ACTIVE_CONSTANT);
                         Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
+                        intent.putExtra("COME",Integer.toString(1));
                         startActivity(intent);
                         finish();
                     } else {
@@ -126,5 +128,10 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void hideProgress(){
         progress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onBackPressed() {
+        System.exit(0);
     }
 }
