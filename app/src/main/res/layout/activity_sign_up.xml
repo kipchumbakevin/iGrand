@@ -25,7 +25,17 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
-
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_height="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        android:background="@drawable/progress"
+        android:padding="5dp"
+        android:visibility="gone"/>
 
     <ScrollView
         android:id="@+id/scroll"
@@ -39,16 +49,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical">
-            <ProgressBar
-                android:id="@+id/progress"
-                android:background="@drawable/progress"
-                android:layout_width="30dp"
-                android:visibility="gone"
-                app:layout_constraintBottom_toTopOf="@id/scroll"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:padding="5dp"
-                android:layout_height="30dp" />
 
             <EditText
                 android:id="@+id/email"

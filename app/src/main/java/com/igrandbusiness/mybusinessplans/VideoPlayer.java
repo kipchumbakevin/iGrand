@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +35,7 @@ public class VideoPlayer extends AppCompatActivity {
 
     VideosAdapter videosAdapter;
     TextView novideos;
+    ImageButton reload;
     RecyclerView recyclerView;
     private ArrayList<ReceiveData>mContentArrayList = new ArrayList<>();
     ProgressBar progressLyt;
@@ -42,12 +45,20 @@ public class VideoPlayer extends AppCompatActivity {
         setContentView(R.layout.activity_video_player);
         recyclerView = findViewById(R.id.recycler);
         progressLyt = findViewById(R.id.progress);
+        reload = findViewById(R.id.reload);
         novideos = findViewById(R.id.novideos);
         videosAdapter = new VideosAdapter(this,mContentArrayList);
         recyclerView.setAdapter(videosAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         fetchVideos();
+        reload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                reload.setVisibility(View.GONE);
+                fetchVideos();
+            }
+        });
 
 //        pick.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -75,6 +86,7 @@ public class VideoPlayer extends AppCompatActivity {
             public void onResponse(Call<List<ReceiveData>> call, Response<List<ReceiveData>> response) {
                 hideProgress();
                 if (response.isSuccessful()) {
+                    recyclerView.setVisibility(View.VISIBLE);
                     if (response.body().size()>0){
                         mContentArrayList.addAll(response.body());
                         videosAdapter.notifyDataSetChanged();
@@ -82,6 +94,8 @@ public class VideoPlayer extends AppCompatActivity {
                         novideos.setVisibility(View.VISIBLE);
                     }
                 } else {
+                    recyclerView.setVisibility(View.GONE);
+                    reload.setVisibility(View.VISIBLE);
                     Toast.makeText(VideoPlayer.this, "Server error " + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -89,6 +103,8 @@ public class VideoPlayer extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<ReceiveData>> call, Throwable t) {
                 hideProgress();
+                recyclerView.setVisibility(View.GONE);
+                reload.setVisibility(View.VISIBLE);
                 Toast.makeText(VideoPlayer.this, "Network error", Toast.LENGTH_SHORT).show();
             }
 

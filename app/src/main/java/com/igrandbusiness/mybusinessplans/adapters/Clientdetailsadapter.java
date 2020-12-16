@@ -40,6 +40,7 @@ public class Clientdetailsadapter extends RecyclerView.Adapter<Clientdetailsadap
         UserDocs userDocs = mDocsArrayList.get(position);
         holder.title.setText(userDocs.getTitle());
         holder.uri = Constants.BASE_URL + "clientDocs/" +userDocs.getUrl();
+        holder.titl = userDocs.getTitle();
     }
 
     @Override
@@ -49,7 +50,7 @@ public class Clientdetailsadapter extends RecyclerView.Adapter<Clientdetailsadap
 
     public class ClientViewHolder extends RecyclerView.ViewHolder {
         TextView title;
-        String uri;
+        String uri,titl;
         public ClientViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
@@ -59,6 +60,7 @@ public class Clientdetailsadapter extends RecyclerView.Adapter<Clientdetailsadap
                 public void onClick(View view) {
                     Intent intent = new Intent(mContext, ViewPDF.class);
                     intent.putExtra("URI",uri);
+                    intent.putExtra("TITLE",titl);
                     mContext.startActivity(intent);
                 }
             });

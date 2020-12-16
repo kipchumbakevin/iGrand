@@ -40,6 +40,7 @@ public class MagazineAdapter extends RecyclerView.Adapter<MagazineAdapter.Magazi
         ReceiveData receiveData = mContentArray.get(position);
         holder.title.setText(receiveData.getTitle());
         holder.uri = Constants.BASE_URL + "magazine/" + receiveData.getUrl();
+        holder.titl = receiveData.getTitle();
     }
 
     @Override
@@ -49,7 +50,7 @@ public class MagazineAdapter extends RecyclerView.Adapter<MagazineAdapter.Magazi
 
     public class MagazineView extends RecyclerView.ViewHolder {
         TextView title;
-        String uri;
+        String uri,titl;
         public MagazineView(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
@@ -59,6 +60,7 @@ public class MagazineAdapter extends RecyclerView.Adapter<MagazineAdapter.Magazi
                 public void onClick(View view) {
                     Intent intent = new Intent(mContext, ViewPDF.class);
                     intent.putExtra("URI",uri);
+                    intent.putExtra("TITLE",titl);
                     mContext.startActivity(intent);
                 }
             });

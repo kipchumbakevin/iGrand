@@ -31,18 +31,27 @@
                     android:layout_centerInParent="true"
                     android:src="@drawable/icon" />
             </RelativeLayout>
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:paddingEnd="5dp"
+                android:paddingStart="1dp"
                 android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:maxLength="35"
-                android:ellipsize="end"
-                android:textSize="15sp"
-                android:textColor="@color/colorPrimary"
-                android:text="The title of the content goes here"/>
-        </androidx.appcompat.widget.LinearLayoutCompat>
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:paddingEnd="6dp"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorPrimary"
+                    android:text="The title of the content goes here even if it is more than one line"/>
+
+            </HorizontalScrollView>
+            </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.cardview.widget.CardView>
     <View
         android:layout_width="match_parent"

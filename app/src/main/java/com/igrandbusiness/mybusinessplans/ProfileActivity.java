@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import retrofit2.Response;
 
 public class ProfileActivity extends AppCompatActivity {
     ImageView settings;
+    ImageButton reload;
     RecyclerView recyclerView;
     private final ArrayList<UserDocs> mDocsArrayList = new ArrayList<>();
     Clientdetailsadapter clientdetailsadapter;
@@ -37,6 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         settings = findViewById(R.id.settings);
         recyclerView = findViewById(R.id.recycler);
+        reload = findViewById(R.id.reload);
         progressLyt = findViewById(R.id.progress);
         noDocs = findViewById(R.id.nodocs);
         clientdetailsadapter = new Clientdetailsadapter(this,mDocsArrayList);
@@ -44,6 +47,13 @@ public class ProfileActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         viewDocs();
+        reload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                reload.setVisibility(View.GONE);
+                viewDocs();
+            }
+        });
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,6 +81,7 @@ public class ProfileActivity extends AppCompatActivity {
                         noDocs.setVisibility(View.VISIBLE);
                     }
                 } else {
+                    reload.setVisibility(View.VISIBLE);
                     Toast.makeText(ProfileActivity.this, "Server error " + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -78,6 +89,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<UserDocs>> call, Throwable t) {
                 hideProgress();
+                reload.setVisibility(View.VISIBLE);
                 Toast.makeText(ProfileActivity.this, "Network error", Toast.LENGTH_SHORT).show();
             }
 

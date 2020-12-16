@@ -16,6 +16,15 @@
         android:background="@drawable/progress"
         android:padding="5dp"
         android:visibility="gone" />
+    <ImageButton
+        android:id="@+id/reload"
+        android:layout_width="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_autorenew"
+        android:visibility="gone"
+        android:layout_height="30dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
