@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     BottomSheetBehavior bottomSheetBehavior;
     ConstraintLayout bottom;
     TextView greeting;
-    CardView call,find;
+    CardView call,find,rate,share;
     RelativeLayout profile;
     String phone;
     ImageView faceb,twitter,telegram,mail,linkedin;
@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         greeting = findViewById(R.id.greeting);
         bottom = findViewById(R.id.bottom);
+        rate = findViewById(R.id.rate);
+        share = findViewById(R.id.share);
         faceb = findViewById(R.id.fb);
         videos = findViewById(R.id.videos);
         profile = findViewById(R.id.profile);
@@ -68,7 +70,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),Podcasts.class);
+                intent.putExtra("STRESS",Integer.toString(1));
                 startActivity(intent);
+                finish();
             }
         });
         businessPlans.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +128,37 @@ public class MainActivity extends AppCompatActivity {
                 } catch (ActivityNotFoundException e) {
                     startActivity(new Intent(Intent.ACTION_VIEW,
                             Uri.parse("https://twitter.com/iGrandbp")));
+                }
+            }
+        });
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                String shareBody = "Make money now and get instant loans.\n" +
+                        "Download iMoney now at https://play.google.com/store/apps/details?id=" + MainActivity.this.getPackageName();
+                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+                intent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(intent, "Share via"));
+            }
+        });
+
+        rate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=" + MainActivity.this.getPackageName());
+                Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                // To count with Play market backstack, After pressing back button,
+                // to taken back to our application, we need to add following flags to intent.
+                goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                try {
+                    startActivity(goToMarket);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("https://play.google.com/store/apps/details?id=" + MainActivity.this.getPackageName())));
                 }
             }
         });

@@ -56,7 +56,13 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginUser();
+                if (!ccp.isValidFullNumber()){
+                    Toast.makeText(LoginActivity.this, "Enter a valid number", Toast.LENGTH_SHORT).show();
+                }if (password.getText().toString().isEmpty()){
+                    Toast.makeText(LoginActivity.this, "Ensure you fill all fields", Toast.LENGTH_SHORT).show();
+                }else {
+                    loginUser();
+                }
             }
         });
         gotToSignUp.setOnClickListener(new View.OnClickListener() {
@@ -83,11 +89,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUser() {
-        if (!ccp.isValidFullNumber()){
-            Toast.makeText(this, "Enter a valid number", Toast.LENGTH_SHORT).show();
-        }if (password.getText().toString().isEmpty()){
-            Toast.makeText(this, "Ensure you fill all fields", Toast.LENGTH_SHORT).show();
-        }else {
             showProgress();
             String pho = ccp.getFullNumberWithPlus();
             String pass = password.getText().toString();
@@ -120,7 +121,6 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Network error. Check your connection", Toast.LENGTH_LONG).show();
                 }
             });
-        }
 
     }
     private void showProgress(){

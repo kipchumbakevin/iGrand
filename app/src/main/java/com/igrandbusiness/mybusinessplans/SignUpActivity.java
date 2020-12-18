@@ -2,7 +2,9 @@ package com.igrandbusiness.mybusinessplans;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -43,7 +45,16 @@ public class SignUpActivity extends AppCompatActivity {
         singnup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkDetails();
+                if (!ccp.isValidFullNumber()){
+                    Toast.makeText(SignUpActivity.this, "Enter a valid number", Toast.LENGTH_SHORT).show();
+                }if (email.getText().toString().isEmpty() || password.getText().toString().isEmpty() || confirm.getText().toString().isEmpty()){
+                    Toast.makeText(SignUpActivity.this, "Ensure you fill all fields", Toast.LENGTH_SHORT).show();
+                }if (!password.getText().toString().equals(confirm.getText().toString())){
+                    Toast.makeText(SignUpActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    checkDetails();
+                }
             }
         });
         login.setOnClickListener(new View.OnClickListener() {
@@ -54,16 +65,27 @@ public class SignUpActivity extends AppCompatActivity {
                 finish();
             }
         });
+        terms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse("https://www.facebook.com/iGrandbp");
+                Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                // To count with Play market backstack, After pressing back button,
+                // to taken back to our application, we need to add following flags to intent.
+                goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                try {
+                    startActivity(goToMarket);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("https://www.facebook.com/iGrandbp")));
+                }
+            }
+        });
     }
     private void checkDetails() {
-        if (!ccp.isValidFullNumber()){
-            Toast.makeText(this, "Enter a valid number", Toast.LENGTH_SHORT).show();
-        }if (email.getText().toString().isEmpty() || password.getText().toString().isEmpty() || confirm.getText().toString().isEmpty()){
-            Toast.makeText(this, "Ensure you fill all fields", Toast.LENGTH_SHORT).show();
-        }if (!password.getText().toString().equals(confirm.getText().toString())){
-            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
-        }
-        else {
+
             final String pho, mail, pass, cpass;
             pho = ccp.getFullNumberWithPlus();
             mail = email.getText().toString();
@@ -98,7 +120,7 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(SignUpActivity.this, "Network error. Check your connection", Toast.LENGTH_LONG).show();
                 }
             });
-        }
+
     }
 
     private void showProgress(){

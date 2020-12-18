@@ -35,14 +35,16 @@ public class ChangePassword extends AppCompatActivity {
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changePass();
+                if (old.getText().toString().isEmpty() || newP.getText().toString().isEmpty() || confirm.getText().toString().isEmpty()){
+                    Toast.makeText(ChangePassword.this, "Ensure you fill all fields", Toast.LENGTH_SHORT).show();
+                }else {
+                    changePass();
+                }
             }
         });
     }
     private void changePass() {
-        if (old.getText().toString().isEmpty() || newP.getText().toString().isEmpty() || confirm.getText().toString().isEmpty()){
-            Toast.makeText(this, "Ensure you fill all fields", Toast.LENGTH_SHORT).show();
-        }else {
+
             showProgress();
             String oldp, newp;
             oldp = old.getText().toString();
@@ -71,7 +73,7 @@ public class ChangePassword extends AppCompatActivity {
                     Toast.makeText(ChangePassword.this, "Network error. Check your connection", Toast.LENGTH_LONG).show();
                 }
             });
-        }
+
     }
     private void showProgress(){
         progress.setVisibility(View.VISIBLE);

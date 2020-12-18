@@ -47,17 +47,19 @@ public class ForgotPassword extends AppCompatActivity {
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changePass();
+                if (!ccp.isValidFullNumber()){
+                    Toast.makeText(ForgotPassword.this, "Enter a valid number", Toast.LENGTH_SHORT).show();
+                }if (password.getText().toString().isEmpty() || confirm_password.getText().toString().isEmpty()){
+                    Toast.makeText(ForgotPassword.this, "Ensure you fill all fields", Toast.LENGTH_SHORT).show();
+                }else {
+                    changePass();
+                }
             }
         });
     }
 
     private void changePass() {
-        if (!ccp.isValidFullNumber()){
-            Toast.makeText(this, "Enter a valid number", Toast.LENGTH_SHORT).show();
-        }if (password.getText().toString().isEmpty() || confirm_password.getText().toString().isEmpty()){
-            Toast.makeText(this, "Ensure you fill all fields", Toast.LENGTH_SHORT).show();
-        }else {
+
             showProgress();
             final String pho = ccp.getFullNumberWithPlus();
             final String pass = password.getText().toString();
@@ -91,7 +93,6 @@ public class ForgotPassword extends AppCompatActivity {
             } else {
                 Toast.makeText(ForgotPassword.this, "Passwords do not match", Toast.LENGTH_LONG).show();
             }
-        }
 
     }
     private void showProgress(){

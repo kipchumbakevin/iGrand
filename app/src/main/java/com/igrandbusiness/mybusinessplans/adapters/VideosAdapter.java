@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -59,10 +60,19 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoHolde
         TextView title;
         String uri;
         File file;
+        LinearLayoutCompat layoutCompat;
         public VideoHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
-
+            layoutCompat = itemView.findViewById(R.id.linear);
+            layoutCompat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mContext, VideosList.class);
+                    intent.putExtra("VIDEO",uri);
+                    mContext.startActivity(intent);
+                }
+            });
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

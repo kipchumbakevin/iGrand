@@ -39,15 +39,17 @@ public class ChangePhone extends AppCompatActivity {
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkPhone();
+                if (!ccp.isValidFullNumber() || !ccp2.isValidFullNumber()){
+                    Toast.makeText(ChangePhone.this, "Enter a valid number", Toast.LENGTH_SHORT).show();
+                }else {
+                    checkPhone();
+                }
             }
         });
     }
 
     private void checkPhone() {
-        if (!ccp.isValidFullNumber() || !ccp2.isValidFullNumber()){
-            Toast.makeText(this, "Enter a valid number", Toast.LENGTH_SHORT).show();
-        }else {
+
             showProgress();
             final String oldpho = ccp.getFullNumberWithPlus();
             final String newpho = ccp2.getFullNumberWithPlus();
@@ -76,7 +78,7 @@ public class ChangePhone extends AppCompatActivity {
                     Toast.makeText(ChangePhone.this, "Network error. Check your connection", Toast.LENGTH_LONG).show();
                 }
             });
-        }
+
     }
     private void showProgress(){
         progress.setVisibility(View.VISIBLE);
