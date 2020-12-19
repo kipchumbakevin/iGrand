@@ -8,6 +8,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -46,6 +47,7 @@ public class Podcasts extends AppCompatActivity {
         contentAdapter = new ContentAdapter(this,mContentArrayList);
         recyclerView.setAdapter(contentAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         if (!getIntent().hasExtra("STRESS")){
             Intent serviceIntent = new Intent(this,ExampleService.class);
             stopService(serviceIntent);
@@ -56,7 +58,7 @@ public class Podcasts extends AppCompatActivity {
                     PendingIntent.FLAG_CANCEL_CURRENT);
             finish();
             AlarmManager mgr = (AlarmManager) Podcasts.this.getSystemService(Context.ALARM_SERVICE);
-            mgr.set(AlarmManager.RTC,System.currentTimeMillis()+1,mPendingIntent);
+            mgr.set(AlarmManager.RTC,System.currentTimeMillis(),mPendingIntent);
             System.exit(0);
            // audioPlayer.stopp();
         }

@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,10 +43,15 @@ public class AudioPlayer extends AppCompatActivity {
         btPlay = findViewById(R.id.bt_play);
         seekBar = findViewById(R.id.seek_bar);
         uri = Uri.parse(getIntent().getExtras().getString("URI"));
+        mediaPlayer = new MediaPlayer();
 
         title = getIntent().getExtras().getString("TITLE");
         setTitle(title);
 
+
+//        mediaPlayer.stop();
+//        mediaPlayer.release();
+//        mediaPlayer = null;
 //        populateTrack();
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
 //            createChannel();
@@ -60,15 +66,7 @@ public class AudioPlayer extends AppCompatActivity {
         };
         int duration = mediaPlayer.getDuration();
         String sDuration = convertFormat(duration);
-        playerDuration.setText(sDuration);
-        btPlay.setVisibility(View.GONE);
-        btPause.setVisibility(View.VISIBLE);
-        mediaPlayer.start();
-        seekBar.setMax(mediaPlayer.getDuration());
-        handler.postDelayed(runnable,0);
-        Intent serviceIntent = new Intent(this,ExampleService.class);
-        serviceIntent.putExtra("TITLE",title);
-        startService(serviceIntent);
+
       //  CreateNotification.createNotification(AudioPlayer.this,song.get(0),R.drawable.ic_pause,1,song.size()-1);
 
         btPlay.setOnClickListener(new View.OnClickListener() {
@@ -175,8 +173,9 @@ public class AudioPlayer extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
-        super.onBackPressed();
+        Intent intent = new Intent(AudioPlayer.this,MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @SuppressLint("DefaultLocale")
