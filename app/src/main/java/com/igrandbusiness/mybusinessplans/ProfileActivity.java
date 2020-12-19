@@ -62,7 +62,7 @@ public class ProfileActivity extends AppCompatActivity {
                     PendingIntent.FLAG_CANCEL_CURRENT);
             finish();
             AlarmManager mgr = (AlarmManager) ProfileActivity.this.getSystemService(Context.ALARM_SERVICE);
-            mgr.set(AlarmManager.RTC,System.currentTimeMillis()+5,mPendingIntent);
+            mgr.set(AlarmManager.RTC,System.currentTimeMillis(),mPendingIntent);
             System.exit(0);
         }
         sharedPreferencesConfig = new SharedPreferencesConfig(this);
@@ -160,7 +160,7 @@ public class ProfileActivity extends AppCompatActivity {
                     Toast.makeText(ProfileActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
                 } else {
-                    Toast.makeText(ProfileActivity.this, "response:" + response.message(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileActivity.this, response.message(), Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -168,7 +168,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<MessagesModel> call, Throwable t) {
                 hideProgress();
-                Toast.makeText(ProfileActivity.this, "errot:" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileActivity.this, "Network error" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -130,4 +130,10 @@ public class SignUpActivity extends AppCompatActivity {
         progress.setVisibility(View.GONE);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(SignUpActivity.this,LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

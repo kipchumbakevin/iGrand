@@ -1,5 +1,6 @@
 package com.igrandbusiness.mybusinessplans.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.MediaStore;
@@ -64,6 +65,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentH
                     intent.putExtra("URI",uri);
                     intent.putExtra("TITLE",titl);
                     mContext.startActivity(intent);
+                    ((Activity)mContext).finish();
                 }
             });
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +75,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentH
                     intent.putExtra("URI",uri);
                     intent.putExtra("TITLE",titl);
                     mContext.startActivity(intent);
+                    ((Activity)mContext).finish();
                 }
             });
         }

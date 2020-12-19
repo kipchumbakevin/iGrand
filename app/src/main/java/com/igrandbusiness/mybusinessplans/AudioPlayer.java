@@ -66,6 +66,14 @@ public class AudioPlayer extends AppCompatActivity {
         };
         int duration = mediaPlayer.getDuration();
         String sDuration = convertFormat(duration);
+        btPlay.setVisibility(View.GONE);
+        btPause.setVisibility(View.VISIBLE);
+        mediaPlayer.start();
+        seekBar.setMax(mediaPlayer.getDuration());
+        handler.postDelayed(runnable,0);
+        Intent serviceIntent = new Intent(AudioPlayer.this,ExampleService.class);
+        serviceIntent.putExtra("TITLE",title);
+        startService(serviceIntent);
 
       //  CreateNotification.createNotification(AudioPlayer.this,song.get(0),R.drawable.ic_pause,1,song.size()-1);
 

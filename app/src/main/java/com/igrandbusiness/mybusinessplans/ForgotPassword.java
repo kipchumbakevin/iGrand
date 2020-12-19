@@ -101,4 +101,11 @@ public class ForgotPassword extends AppCompatActivity {
     private void hideProgress(){
         progress.setVisibility(View.GONE);
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(ForgotPassword.this,LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }
