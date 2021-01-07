@@ -131,6 +131,7 @@ public class CodeVerification extends AppCompatActivity implements
                     sharedPreferencesConfig.saveAuthenticationInformation(token,clientsPhone, Constants.ACTIVE_CONSTANT);
                     Toast.makeText(CodeVerification.this, "Successfully registered", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(CodeVerification.this, ProfileActivity.class);
+                    intent.putExtra("COME",Integer.toString(1));
                     startActivity(intent);
                     finish();
                 }
@@ -265,6 +266,7 @@ public class CodeVerification extends AppCompatActivity implements
                     sharedPreferencesConfig.saveAuthenticationInformation(token,clientsPhone, Constants.ACTIVE_CONSTANT);
                     Toast.makeText(CodeVerification.this, "Successfully changed", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(CodeVerification.this, ProfileActivity.class);
+                    intent.putExtra("COME",Integer.toString(1));
                     startActivity(intent);
                     finish();
                 }

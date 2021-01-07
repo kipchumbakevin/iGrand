@@ -62,7 +62,7 @@ public class ProfileActivity extends AppCompatActivity {
                     PendingIntent.FLAG_CANCEL_CURRENT);
             finish();
             AlarmManager mgr = (AlarmManager) ProfileActivity.this.getSystemService(Context.ALARM_SERVICE);
-            mgr.set(AlarmManager.RTC,System.currentTimeMillis(),mPendingIntent);
+            mgr.set(AlarmManager.RTC,System.currentTimeMillis()+3,mPendingIntent);
             System.exit(0);
         }
         sharedPreferencesConfig = new SharedPreferencesConfig(this);
