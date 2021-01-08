@@ -14,44 +14,59 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ImageListener;
 
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
-    BottomSheetBehavior bottomSheetBehavior;
+    BottomSheetBehavior bottomSheetBehavior,bottomDetails;
     ConstraintLayout bottom;
     TextView greeting;
     CardView call,find,rate,share;
     RelativeLayout profile;
     String phone;
-    ImageView faceb,twitter,telegram,mail,linkedin;
-    LinearLayoutCompat videos,magazine,podcasts,businessPlans;
-    boolean oo = true;
+    ImageView faceb,twitter,telegram,mail,linkedin,menu;
+    LinearLayoutCompat videos,magazine,podcasts,businessPlans,bottomD;
+    private int[] mImages = new int[]{
+            R.drawable.car,R.drawable.dog,R.drawable.plane,R.drawable.pool
+    };
+    boolean oo,ff = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         greeting = findViewById(R.id.greeting);
         bottom = findViewById(R.id.bottom);
+        bottomD = findViewById(R.id.bottomD);
         rate = findViewById(R.id.rate);
         share = findViewById(R.id.share);
         faceb = findViewById(R.id.fb);
         videos = findViewById(R.id.videos);
         profile = findViewById(R.id.profile);
         call = findViewById(R.id.call_us);
+        menu = findViewById(R.id.menu);
         find = findViewById(R.id.find_us);
         magazine = findViewById(R.id.magazine);
         podcasts = findViewById(R.id.podcasts);
         businessPlans = findViewById(R.id.business_plans);
         twitter = findViewById(R.id.twitter);
         telegram = findViewById(R.id.telegram);
-
+        CarouselView carouselView = findViewById(R.id.slider);
+        carouselView.setPageCount(mImages.length);
         mail = findViewById(R.id.mail);
         linkedin = findViewById(R.id.linkedin);
         phone = "+254795801971";
         bottomSheetBehavior = BottomSheetBehavior.from(bottom);
+        bottomDetails = BottomSheetBehavior.from(bottomD);
 
         greetUser();
+        carouselView.setImageListener(new ImageListener() {
+            @Override
+            public void setImageForPosition(int position, ImageView imageView) {
+                imageView.setImageResource(mImages[position]);
+            }
+        });
         videos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,6 +103,24 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this,LoginActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (ff && !oo) {
+                    bottomDetails.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    oo = true;
+                    ff = false;
+                }else if (ff){
+                    bottomDetails.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    ff = false;
+                }
+                else {
+                    bottomDetails.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    ff = true;
+                }
             }
         });
         faceb.setOnClickListener(new View.OnClickListener() {
@@ -133,6 +166,9 @@ public class MainActivity extends AppCompatActivity {
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                bottomDetails.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                ff = true;
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 String shareBody = "Make money now and get instant loans.\n" +
@@ -146,6 +182,8 @@ public class MainActivity extends AppCompatActivity {
         rate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                bottomDetails.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                ff = true;
                 Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=" + MainActivity.this.getPackageName());
                 Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
                 // To count with Play market backstack, After pressing back button,
@@ -219,6 +257,8 @@ public class MainActivity extends AppCompatActivity {
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                bottomDetails.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                ff = true;
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse("tel:"+ phone));
                 startActivity(intent);
@@ -227,6 +267,8 @@ public class MainActivity extends AppCompatActivity {
         find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                bottomDetails.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                ff = true;
                 if (oo) {
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                     oo = false;

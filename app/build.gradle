@@ -49,4 +49,6 @@ dependencies {
     implementation 'com.github.kk121:File-Loader:1.2'
 
     implementation 'androidx.media:media:1.1.0'
+    //carrousel
+    implementation 'com.synnapps:carouselview:0.1.5'
 }

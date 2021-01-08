@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Business Plans</string>
+    <string name="app_name">iGrand Business</string>
     <string name="mission">To provide Micro, Small and Medium sized entrepreneurs with insights to plan ahead through professional business plans.</string>
 
     <string name="SHARED_PREFERENCES">com.example.lovidovi.utils.sharedpref</string>
