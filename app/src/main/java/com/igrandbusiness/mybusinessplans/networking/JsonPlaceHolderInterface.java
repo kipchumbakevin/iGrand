@@ -91,8 +91,14 @@ public interface JsonPlaceHolderInterface {
 
     );
     //getDocs
-    @GET("api/getdocs")
-    Call<List<UserDocs>> getDocs();
+    @FormUrlEncoded
+    @POST("api/getdocs")
+    Call<List<UserDocs>> getDocs(
+            @Field("email")String email
+
+    );
+//    @GET("api/getdocs")
+//    Call<List<UserDocs>> getDocs();
     //getvideo
     @GET("api/getvid")
     Call<List<ReceiveData>> getVids();
@@ -103,6 +109,7 @@ public interface JsonPlaceHolderInterface {
     @GET("api/getpod")
     Call<List<ReceiveData>> getPod();
     //logout
+
     @GET("api/auth/logout")
     Call<MessagesModel> logOut();
 }

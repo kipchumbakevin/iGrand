@@ -48,20 +48,19 @@ public class Podcasts extends AppCompatActivity {
         recyclerView.setAdapter(contentAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        if (!getIntent().hasExtra("STRESS")){
-            Intent serviceIntent = new Intent(this,ExampleService.class);
-            stopService(serviceIntent);
-            Intent mStartActivity = new Intent(Podcasts.this,Podcasts.class);
-            mStartActivity.putExtra("STRESS",Integer.toString(1));
-            int mPendingIntentId = 123456;
-            PendingIntent mPendingIntent = PendingIntent.getActivity(Podcasts.this,mPendingIntentId,mStartActivity,
-                    PendingIntent.FLAG_CANCEL_CURRENT);
-            finish();
-            AlarmManager mgr = (AlarmManager) Podcasts.this.getSystemService(Context.ALARM_SERVICE);
-            mgr.set(AlarmManager.RTC,System.currentTimeMillis(),mPendingIntent);
-            System.exit(0);
+//            Intent serviceIntent = new Intent(this,ExampleService.class);
+//            stopService(serviceIntent);
+//            Intent mStartActivity = new Intent(Podcasts.this,Podcasts.class);
+//            mStartActivity.putExtra("STRESS",Integer.toString(1));
+//            int mPendingIntentId = 123456;
+//            PendingIntent mPendingIntent = PendingIntent.getActivity(Podcasts.this,mPendingIntentId,mStartActivity,
+//                    PendingIntent.FLAG_CANCEL_CURRENT);
+//            finish();
+//            AlarmManager mgr = (AlarmManager) Podcasts.this.getSystemService(Context.ALARM_SERVICE);
+//            mgr.set(AlarmManager.RTC,System.currentTimeMillis(),mPendingIntent);
+//            System.exit(0);
            // audioPlayer.stopp();
-        }
+
 
         fetchPod();
         reload.setOnClickListener(new View.OnClickListener() {

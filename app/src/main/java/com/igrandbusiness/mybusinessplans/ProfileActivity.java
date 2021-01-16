@@ -33,13 +33,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProfileActivity extends AppCompatActivity {
-    ImageView settings,logout;
+    ImageView settings;
     ImageButton reload;
     RecyclerView recyclerView;
     private final ArrayList<UserDocs> mDocsArrayList = new ArrayList<>();
     Clientdetailsadapter clientdetailsadapter;
-    TextView noDocs;
+    TextView noDocs,emailView;
     ProgressBar progressLyt;
+    String email;
     SharedPreferencesConfig sharedPreferencesConfig;
     int come = 0;
     @Override
@@ -48,8 +49,8 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         settings = findViewById(R.id.settings);
         recyclerView = findViewById(R.id.recycler);
-        logout = findViewById(R.id.logout);
         reload = findViewById(R.id.reload);
+        emailView = findViewById(R.id.email);
         progressLyt = findViewById(R.id.progress);
         noDocs = findViewById(R.id.nodocs);
         if (getIntent().hasExtra("COME")){
@@ -69,6 +70,8 @@ public class ProfileActivity extends AppCompatActivity {
         clientdetailsadapter = new Clientdetailsadapter(this,mDocsArrayList);
         recyclerView.setAdapter(clientdetailsadapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        email = sharedPreferencesConfig.readClientsEmail();
+        emailView.setText(email);
 
         viewDocs();
         reload.setOnClickListener(new View.OnClickListener() {
@@ -78,35 +81,13 @@ public class ProfileActivity extends AppCompatActivity {
                 viewDocs();
             }
         });
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(ProfileActivity.this);
-                alert.setTitle("Logout")
-                        .setMessage("Are you sure you want to logout?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                logout();
-                                dialogInterface.dismiss();
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                            }
-                        });
-                AlertDialog alertDialog = alert.create();
-                alertDialog.show();
 
-            }
-        });
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ProfileActivity.this, SettingsActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
@@ -114,9 +95,10 @@ public class ProfileActivity extends AppCompatActivity {
     private void viewDocs() {
         showProgress();
         mDocsArrayList.clear();
+
         Call<List<UserDocs>> call = RetrofitClient.getInstance(ProfileActivity.this)
                 .getApiConnector()
-                .getDocs();
+                .getDocs(email);
         call.enqueue(new Callback<List<UserDocs>>() {
             @Override
             public void onResponse(Call<List<UserDocs>> call, Response<List<UserDocs>> response) {
@@ -143,35 +125,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         });
     }
-    private void logout() {
-        showProgress();
-        Call<MessagesModel> call = RetrofitClient.getInstance(ProfileActivity.this)
-                .getApiConnector()
-                .logOut();
-        call.enqueue(new Callback<MessagesModel>() {
-            @Override
-            public void onResponse(Call<MessagesModel> call, Response<MessagesModel> response) {
-                hideProgress();
-                if (response.code() == 200) {
-                    sharedPreferencesConfig.clear();
-                    Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    finish();
-                    Toast.makeText(ProfileActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
-                } else {
-                    Toast.makeText(ProfileActivity.this, response.message(), Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<MessagesModel> call, Throwable t) {
-                hideProgress();
-                Toast.makeText(ProfileActivity.this, "Network error" + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     @Override
     public void onBackPressed() {

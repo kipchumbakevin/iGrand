@@ -42,18 +42,18 @@ public class AudioPlayer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio_player);
-//        playerDuration = findViewById(R.id.player_duration);
-//        playerPosition = findViewById(R.id.player_position);
-//        btFF = findViewById(R.id.bt_ff);
-//        btRew = findViewById(R.id.bt_rew);
-//        btPause = findViewById(R.id.bt_pause);
-//        btPlay = findViewById(R.id.bt_play);
-//        seekBar = findViewById(R.id.seek_bar);
-//        uri = Uri.parse(getIntent().getExtras().getString("URI"));
-//        mediaPlayer = new MediaPlayer();
-//
-//        title = getIntent().getExtras().getString("TITLE");
-//        setTitle(title);
+        playerDuration = findViewById(R.id.player_duration);
+        playerPosition = findViewById(R.id.player_position);
+        btFF = findViewById(R.id.bt_ff);
+        btRew = findViewById(R.id.bt_rew);
+        btPause = findViewById(R.id.bt_pause);
+        btPlay = findViewById(R.id.bt_play);
+        seekBar = findViewById(R.id.seek_bar);
+        uri = Uri.parse(getIntent().getExtras().getString("URI"));
+       // mediaPlayer = new MediaPlayer();
+
+        title = getIntent().getExtras().getString("TITLE");
+        setTitle(title);
 
 
         mWebview  = new WebView(this);
@@ -76,8 +76,9 @@ public class AudioPlayer extends AppCompatActivity {
             }
         });
 
-        mWebview .loadUrl("https://gaana.com/song/galliyan");
+        mWebview .loadUrl(uri.toString());
         setContentView(mWebview );
+        Toast.makeText(this, "Loading please wait...", Toast.LENGTH_LONG).show();
 //        mediaPlayer.stop();
 //        mediaPlayer.release();
 //        mediaPlayer = null;
@@ -189,31 +190,16 @@ public class AudioPlayer extends AppCompatActivity {
 //
 //            }
 //        });
-//    }
-//
-////    private void populateTrack() {
-////        song  =new ArrayList<>();
-////        song.add(new Track(title));
-////    }
-////
-////    private void createChannel() {
-////        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-////            NotificationChannel channel = new NotificationChannel(CreateNotification.CHANNEL_ID,
-////                    "Music", NotificationManager.IMPORTANCE_LOW);
-////            notificationManager = getSystemService(NotificationManager.class);
-////            if (notificationManager != null){
-////                notificationManager.createNotificationChannel(channel);
-////
-////            }
-////        }
-////    }
-//
-//    @Override
-//    public void onBackPressed() {
-//        Intent intent = new Intent(AudioPlayer.this,MainActivity.class);
-//        startActivity(intent);
-//        finish();
-//    }
+  }
+
+
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(AudioPlayer.this,Podcasts.class);
+        startActivity(intent);
+        finish();
+    }
 //
 //    @SuppressLint("DefaultLocale")
 //    private String convertFormat(int duration) {
@@ -233,5 +219,5 @@ public class AudioPlayer extends AppCompatActivity {
 //    public void stopp(View v){
 //        Intent serviceIntent = new Intent(this,ExampleService.class);
 //        stopService(serviceIntent);
-    }
+//    }
 }

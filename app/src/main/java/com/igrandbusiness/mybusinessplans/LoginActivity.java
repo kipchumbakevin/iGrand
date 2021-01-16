@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText phone,password;
     CountryCodePicker ccp;
     ProgressBar progress;
-    private String clientsPhone,accessToken;
+    private String clientsPhone,accessToken,clientsEmail;
     SharedPreferencesConfig sharedPreferencesConfig;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,10 +104,11 @@ public class LoginActivity extends AppCompatActivity {
                         //  String mmm =  Integer.toString(response.body().getUser().getId());
                         accessToken = response.body().getAccessToken();
                         clientsPhone = response.body().getUser().getPhone();
+                        clientsEmail = response.body().getUser().getEmail();
                         //   clientsId = Integer.toString(response.body().getUser().getId());
-                        sharedPreferencesConfig.saveAuthenticationInformation(accessToken, clientsPhone, Constants.ACTIVE_CONSTANT);
+                        sharedPreferencesConfig.saveAuthenticationInformation(accessToken, clientsPhone,clientsEmail, Constants.ACTIVE_CONSTANT);
                         Intent intent = new Intent(LoginActivity.this, ProfileActivity.class);
-                        intent.putExtra("COME",Integer.toString(1));
+                        intent.putExtra("COME",Integer.toString(2));
                         startActivity(intent);
                         finish();
                     } else {

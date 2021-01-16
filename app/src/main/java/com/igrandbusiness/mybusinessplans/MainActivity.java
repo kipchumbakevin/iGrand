@@ -9,17 +9,20 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
     BottomSheetBehavior bottomSheetBehavior,bottomDetails;
     ConstraintLayout bottom;
     TextView greeting;
@@ -60,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
         bottomSheetBehavior = BottomSheetBehavior.from(bottom);
         bottomDetails = BottomSheetBehavior.from(bottomD);
 
+
+
+
+
         greetUser();
         carouselView.setImageListener(new ImageListener() {
             @Override
@@ -77,14 +84,18 @@ public class MainActivity extends AppCompatActivity {
         magazine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Magazines.class);
-                startActivity(intent);
+
+                    Intent intent = new Intent(getApplicationContext(), Magazines.class);
+                    startActivity(intent);
+
+
+
             }
         });
         podcasts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),AudioPlayer.class);
+                Intent intent = new Intent(getApplicationContext(),Podcasts.class);
                 startActivity(intent);
                 finish();
             }
@@ -103,24 +114,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this,LoginActivity.class);
                 startActivity(intent);
                 finish();
-            }
-        });
-        menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ff && !oo) {
-                    bottomDetails.setState(BottomSheetBehavior.STATE_EXPANDED);
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                    oo = true;
-                    ff = false;
-                }else if (ff){
-                    bottomDetails.setState(BottomSheetBehavior.STATE_EXPANDED);
-                    ff = false;
-                }
-                else {
-                    bottomDetails.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                    ff = true;
-                }
             }
         });
         faceb.setOnClickListener(new View.OnClickListener() {
@@ -163,42 +156,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                bottomDetails.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                ff = true;
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                String shareBody = "Make money now and get instant loans.\n" +
-                        "Download iMoney now at https://play.google.com/store/apps/details?id=" + MainActivity.this.getPackageName();
-                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                intent.putExtra(Intent.EXTRA_TEXT, shareBody);
-                startActivity(Intent.createChooser(intent, "Share via"));
-            }
-        });
 
-        rate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bottomDetails.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                ff = true;
-                Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=" + MainActivity.this.getPackageName());
-                Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-                // To count with Play market backstack, After pressing back button,
-                // to taken back to our application, we need to add following flags to intent.
-                goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
-                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
-                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                try {
-                    startActivity(goToMarket);
-                } catch (ActivityNotFoundException e) {
-                    startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("https://play.google.com/store/apps/details?id=" + MainActivity.this.getPackageName())));
-                }
-            }
-        });
         mail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -254,21 +212,30 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        call.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+
+    }
+    public void showPopup(View v){
+        if (!oo) {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            oo = true;
+        }
+        PopupMenu popupMenu = new PopupMenu(this,v);
+        popupMenu.setOnMenuItemClickListener(this);
+        popupMenu.inflate(R.menu.pop_up);
+        popupMenu.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        switch (menuItem.getItemId()){
+            case R.id.call:
                 bottomDetails.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 ff = true;
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse("tel:"+ phone));
                 startActivity(intent);
-            }
-        });
-        find.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bottomDetails.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                ff = true;
+                return true;
+            case R.id.find:
                 if (oo) {
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                     oo = false;
@@ -276,9 +243,41 @@ public class MainActivity extends AppCompatActivity {
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                     oo = true;
                 }
-            }
-        });
+                return true;
+            case R.id.share:
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                bottomDetails.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                ff = true;
+                Intent intent1 = new Intent(Intent.ACTION_SEND);
+                intent1.setType("text/plain");
+                String shareBody = "Make money now and get instant loans.\n" +
+                        "Download iMoney now at https://play.google.com/store/apps/details?id=" + MainActivity.this.getPackageName();
+                intent1.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+                intent1.putExtra(Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(intent1, "Share via"));
+                return true;
+            case R.id.rate:
+                bottomDetails.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                ff = true;
+                Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=" + MainActivity.this.getPackageName());
+                Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                // To count with Play market backstack, After pressing back button,
+                // to taken back to our application, we need to add following flags to intent.
+                goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                try {
+                    startActivity(goToMarket);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("https://play.google.com/store/apps/details?id=" + MainActivity.this.getPackageName())));
+                }
+                return true;
+                default:
+                    return false;
+        }
     }
+
     private void greetUser() {
         Calendar calendar = Calendar.getInstance();
         int timeOfDay = calendar.get(Calendar.HOUR_OF_DAY);

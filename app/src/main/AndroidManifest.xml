@@ -15,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
         <activity android:name=".Podcasts"
             android:label="Podcasts"/>
         <activity android:name=".Magazines"
@@ -62,5 +63,4 @@
         </activity>
         <service android:name=".ExampleService"/>
     </application>
-
 </manifest>

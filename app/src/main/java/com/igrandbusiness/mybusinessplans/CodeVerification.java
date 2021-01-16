@@ -42,7 +42,7 @@ public class CodeVerification extends AppCompatActivity implements
     Button confirm;
     ProgressBar progress;
     TextView resend;
-    String email,phone,code,password,confirmPassword,newpass,clientsPhone,token;
+    String email,phone,code,password,confirmPassword,newpass,clientsPhone,token,clientsEmail;
     private ZikySMSReceiver smsReceiver;
     public String appSignature;
     private Context context;
@@ -127,8 +127,9 @@ public class CodeVerification extends AppCompatActivity implements
                 if(response.code()==201){
                     token = response.body().getAccessToken();
                     clientsPhone = response.body().getUser().getPhone();
+                    clientsEmail = response.body().getUser().getEmail();
                     //  clientsId = Integer.toString(response.body().getUser().getId());
-                    sharedPreferencesConfig.saveAuthenticationInformation(token,clientsPhone, Constants.ACTIVE_CONSTANT);
+                    sharedPreferencesConfig.saveAuthenticationInformation(token,clientsPhone,clientsEmail,Constants.ACTIVE_CONSTANT);
                     Toast.makeText(CodeVerification.this, "Successfully registered", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(CodeVerification.this, ProfileActivity.class);
                     intent.putExtra("COME",Integer.toString(1));
@@ -262,8 +263,9 @@ public class CodeVerification extends AppCompatActivity implements
                 if(response.code()==201){
                     token = response.body().getAccessToken();
                     clientsPhone = response.body().getUser().getPhone();
+                    clientsEmail = response.body().getUser().getEmail();
                     //  clientsId = Integer.toString(response.body().getUser().getId());
-                    sharedPreferencesConfig.saveAuthenticationInformation(token,clientsPhone, Constants.ACTIVE_CONSTANT);
+                    sharedPreferencesConfig.saveAuthenticationInformation(token,clientsPhone,clientsEmail, Constants.ACTIVE_CONSTANT);
                     Toast.makeText(CodeVerification.this, "Successfully changed", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(CodeVerification.this, ProfileActivity.class);
                     intent.putExtra("COME",Integer.toString(1));

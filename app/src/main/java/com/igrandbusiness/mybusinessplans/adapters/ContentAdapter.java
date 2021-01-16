@@ -40,7 +40,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentH
     public void onBindViewHolder(@NonNull ContentHolder holder, int position) {
         ReceiveData receiveData = mContentArray.get(position);
         holder.title.setText(receiveData.getTitle());
-        holder.uri = Constants.BASE_URL+"podcast/"+receiveData.getUrl();
+        holder.uri = receiveData.getUrl();
         holder.titl = receiveData.getTitle();
     }
     @Override

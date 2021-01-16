@@ -48,7 +48,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideoHolde
     public void onBindViewHolder(@NonNull final VideoHolder holder, int position) {
         ReceiveData receiveData = mContentArray.get(position);
         holder.title.setText(receiveData.getTitle());
-        holder.uri = Constants.BASE_URL + "videos/" + receiveData.getUrl();
+        holder.uri = receiveData.getUrl();
     }
 
     @Override
