@@ -75,7 +75,6 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentH
                     intent.putExtra("URI",uri);
                     intent.putExtra("TITLE",titl);
                     mContext.startActivity(intent);
-                    ((Activity)mContext).finish();
                 }
             });
         }

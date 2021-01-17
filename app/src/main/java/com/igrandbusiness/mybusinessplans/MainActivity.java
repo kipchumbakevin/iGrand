@@ -12,10 +12,18 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.facebook.ads.Ad;
+import com.facebook.ads.AdError;
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
+import com.facebook.ads.AudienceNetworkAds;
+import com.facebook.ads.InterstitialAd;
+import com.facebook.ads.InterstitialAdListener;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
@@ -23,7 +31,7 @@ import com.synnapps.carouselview.ImageListener;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
-    BottomSheetBehavior bottomSheetBehavior,bottomDetails;
+    BottomSheetBehavior bottomSheetBehavior;
     ConstraintLayout bottom;
     TextView greeting;
     CardView call,find,rate,share;
@@ -35,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             R.drawable.car,R.drawable.dog,R.drawable.plane,R.drawable.pool
     };
     boolean oo,ff = true;
+    private AdView adView;
+    private InterstitialAd interstitialAd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,8 +71,64 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         linkedin = findViewById(R.id.linkedin);
         phone = "+254795801971";
         bottomSheetBehavior = BottomSheetBehavior.from(bottom);
-        bottomDetails = BottomSheetBehavior.from(bottomD);
 
+        AudienceNetworkAds.initialize(this);
+        adView = new AdView(this, getString(R.string.banner), AdSize.BANNER_HEIGHT_50);
+
+        // Find the Ad Container
+        LinearLayout adContainer = (LinearLayout) findViewById(R.id.banner_container);
+
+        // Add the ad view to your activity layout
+        adContainer.addView(adView);
+
+        // Request an ad
+        adView.loadAd();
+        interstitialAd = new InterstitialAd(this, getString(R.string.interstitial));
+        InterstitialAdListener interstitialAdListener = new InterstitialAdListener() {
+            @Override
+            public void onInterstitialDisplayed(Ad ad) {
+                // Interstitial ad displayed callback
+                //  Log.e(TAG, "Interstitial ad displayed.");
+            }
+
+            @Override
+            public void onInterstitialDismissed(Ad ad) {
+                Intent intent = new Intent(getApplicationContext(), Magazines.class);
+                startActivity(intent);
+                finish();
+
+            }
+
+            @Override
+            public void onError(Ad ad, AdError adError) {
+                // Ad error callback
+                //Log.e(TAG, "Interstitial ad failed to load: " + adError.getErrorMessage());
+            }
+
+            @Override
+            public void onAdLoaded(Ad ad) {
+                // Interstitial ad is loaded and ready to be displayed
+                // Log.d(TAG, "Interstitial ad is loaded and ready to be displayed!");
+                // Show the ad
+                //interstitialAd.show();
+            }
+
+            @Override
+            public void onAdClicked(Ad ad) {
+                // Ad clicked callback
+                // Log.d(TAG, "Interstitial ad clicked!");
+            }
+
+            @Override
+            public void onLoggingImpression(Ad ad) {
+                // Ad impression logged callback
+                // Log.d(TAG, "Interstitial ad impression logged!");
+            }
+        };
+        interstitialAd.loadAd(
+                interstitialAd.buildLoadAdConfig()
+                        .withAdListener(interstitialAdListener)
+                        .build());
 
 
 
@@ -79,15 +145,20 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),VideoPlayer.class);
                 startActivity(intent);
+                finish();
             }
         });
         magazine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                if (interstitialAd.isAdLoaded()){
+                    interstitialAd.show();
+                }else {
                     Intent intent = new Intent(getApplicationContext(), Magazines.class);
                     startActivity(intent);
-
+                    finish();
+                }
 
 
             }
@@ -97,7 +168,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(),Podcasts.class);
                 startActivity(intent);
-                finish();
             }
         });
         businessPlans.setOnClickListener(new View.OnClickListener() {
@@ -226,10 +296,18 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     }
 
     @Override
+    protected void onDestroy() {
+        if (adView != null) {
+            adView.destroy();
+        }if (interstitialAd != null){
+            interstitialAd.destroy();
+        }
+        super.onDestroy();
+    }
+    @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.call:
-                bottomDetails.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 ff = true;
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse("tel:"+ phone));
@@ -246,7 +324,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 return true;
             case R.id.share:
                 bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                bottomDetails.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 ff = true;
                 Intent intent1 = new Intent(Intent.ACTION_SEND);
                 intent1.setType("text/plain");
@@ -257,7 +334,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 startActivity(Intent.createChooser(intent1, "Share via"));
                 return true;
             case R.id.rate:
-                bottomDetails.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 ff = true;
                 Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=" + MainActivity.this.getPackageName());
                 Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);

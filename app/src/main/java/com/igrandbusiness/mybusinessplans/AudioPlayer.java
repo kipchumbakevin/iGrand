@@ -19,9 +19,18 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.facebook.ads.Ad;
+import com.facebook.ads.AdError;
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
+import com.facebook.ads.AudienceNetworkAds;
+import com.facebook.ads.InterstitialAd;
+import com.facebook.ads.InterstitialAdListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +63,7 @@ public class AudioPlayer extends AppCompatActivity {
 
         title = getIntent().getExtras().getString("TITLE");
         setTitle(title);
+
 
 
         mWebview  = new WebView(this);
@@ -193,13 +203,6 @@ public class AudioPlayer extends AppCompatActivity {
   }
 
 
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(AudioPlayer.this,Podcasts.class);
-        startActivity(intent);
-        finish();
-    }
 //
 //    @SuppressLint("DefaultLocale")
 //    private String convertFormat(int duration) {

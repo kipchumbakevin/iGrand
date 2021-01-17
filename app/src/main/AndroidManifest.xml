@@ -17,44 +17,59 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity android:name=".Podcasts"
+            android:screenOrientation="portrait"
             android:label="Podcasts"/>
         <activity android:name=".Magazines"
+            android:screenOrientation="portrait"
             android:label="Magazines"/>
         <activity
             android:name=".ProfileActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".settings.SettingsActivity"
             android:label="Settings"
+            android:screenOrientation="portrait"
             android:parentActivityName=".ProfileActivity"/>
         <activity
+            android:screenOrientation="portrait"
             android:name=".CodeVerification"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ChangePhone"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ChangePassword"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ForgotPassword"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LoginActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SignUpActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".VideosList"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:configChanges="orientation"/>
-        <activity android:name=".AudioPlayer"/>
+        <activity android:name=".AudioPlayer"
+            android:screenOrientation="portrait"/>
         <activity android:name=".VideoPlayer"
+            android:screenOrientation="portrait"
             android:label="Videos"/>
         <activity
-            android:name=".ViewPDF" />
+            android:name=".ViewPDF"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

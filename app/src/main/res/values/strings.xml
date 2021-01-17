@@ -8,8 +8,6 @@
     <string name="CLIENTS_TOKEN">com.example.lovidovi.utils.sharedpref.accessToken</string>
     <string name="CLIENTS_STATUS">com.example.lovidovi.utils.sharedpref.status</string>
 
-    <string name="banner">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="interstitial">ca-app-pub-3940256099942544/1033173712</string>
-    //banner ca-app-pub-2675524966199983/1365984570
-    //inter ca-app-pub-2675524966199983/2714709359
+    <string name="banner">IMG_16_9_APP_INSTALL#607402693307934_607717893276414</string>
+    <string name="interstitial">IMG_16_9_APP_INSTALL#607402693307934_607763939938476</string>
 </resources>

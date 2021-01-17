@@ -65,4 +65,5 @@
             android:id="@+id/bt_ff"
             android:src="@drawable/ic_ff"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
+
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -18,10 +18,15 @@ import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
+import com.facebook.ads.AudienceNetworkAds;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.github.barteksc.pdfviewer.listener.OnPageErrorListener;
@@ -48,6 +53,7 @@ public class ViewPDF extends AppCompatActivity implements OnLoadCompleteListener
     TextView percent;
     ProgressBar progressBar;
     DownloadManager downloadManager;
+    private AdView adView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +69,17 @@ public class ViewPDF extends AppCompatActivity implements OnLoadCompleteListener
         downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         uri = Uri.parse(pdf);
 
+        AudienceNetworkAds.initialize(this);
+        adView = new AdView(this, getString(R.string.banner), AdSize.BANNER_HEIGHT_50);
+
+        // Find the Ad Container
+        LinearLayout adContainer = (LinearLayout) findViewById(R.id.banner_container);
+
+        // Add the ad view to your activity layout
+        adContainer.addView(adView);
+
+        // Request an ad
+        adView.loadAd();
         FileLoader.with(this).load(pdf,false)
                 .fromDirectory("My_Pdfs",FileLoader.DIR_INTERNAL)
                 .asFile(new FileRequestListener<File>() {
@@ -166,5 +183,12 @@ public class ViewPDF extends AppCompatActivity implements OnLoadCompleteListener
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,""+name);
         DownloadManager manager =(DownloadManager)getSystemService(Context.DOWNLOAD_SERVICE);
         manager.enqueue(request);
+    }
+    @Override
+    protected void onDestroy() {
+        if (adView != null) {
+            adView.destroy();
+        }
+        super.onDestroy();
     }
 }
